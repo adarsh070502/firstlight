@@ -1,0 +1,21 @@
+# environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.idea/
+
+# large files: checkpoints, weights, data (weights are on Hugging Face)
+*.pt
+*.safetensors
+*.onnx
+*.npy
+*.bin
+edu_fineweb10B/
+pretraining/hellaswag/
+sft/data/
+nohup.out
+sft/docs/
+huggingface/model_repo/
+huggingface/

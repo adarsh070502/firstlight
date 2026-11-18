@@ -3,7 +3,7 @@
 A 124M-parameter language model **pretrained from scratch** on 9.83B tokens of FineWeb-EDU, then turned into a
 **chat assistant** with supervised fine-tuning (SFT). GPT-2 architecture, plain PyTorch.
 
-- **Demo** (Base vs Chat side by side): https://adarsheluri143--firstlight-chat-ui.us-east.modal.run
+- **Demo** (chat, and the model before vs after training side by side): https://adarsheluri143--firstlight-chat-ui.us-east.modal.run
 - **Weights + model card:** https://huggingface.co/adarsh-007/firstlight-124m
 
 | Model | HellaSwag (acc_norm) | Val loss |
@@ -45,6 +45,10 @@ sft/
   chat.py           talk to the model in the terminal
   hellaswag.py      did SFT keep the pretraining knowledge?
   log/              log.txt + metrics.csv of the SFT run
+modal/
+  app.py            the demo page (Gradio): chat + before vs after training
+  model.py          the model for serving: KV cache, streaming generation, weights from Hugging Face
+  modal_app.py      deploys app.py on Modal (CPU, scales to zero when idle)
 ```
 
 Checkpoints, datasets and tokenized data are not in this repo (too large). The weights are on
@@ -55,6 +59,13 @@ Checkpoints, datasets and tokenized data are not in this repo (too large). The w
 
 ```bash
 pip install torch tiktoken numpy datasets
+
+# run the demo locally (downloads the weights from Hugging Face)
+pip install gradio safetensors huggingface_hub
+python modal/app.py                              # http://127.0.0.1:7865
+
+# deploy it on Modal
+pip install modal && modal deploy modal/modal_app.py
 
 # reproduce the training (scripts expect to be run from the folder that contains this repo as GPT2/)
 python pretraining/fineweb.py                    # ~10B tokens of shards

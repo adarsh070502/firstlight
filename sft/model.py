@@ -20,7 +20,7 @@ class GPTConfig:
     block_size: int = 1024
 
 
-class CasualSelfAttention(nn.Module):
+class CausalSelfAttention(nn.Module):
     def __init__(self, config:GPTConfig):
         super().__init__()
 
@@ -87,7 +87,7 @@ class Block(nn.Module):
         self.ln_1 = nn.LayerNorm(config.n_embd)
         self.ln_2 = nn.LayerNorm(config.n_embd)
 
-        self.attn = CasualSelfAttention(config)
+        self.attn = CausalSelfAttention(config)
         self.mlp = MLP(config)
 
     def forward(self, x):
